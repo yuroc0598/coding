@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 
-#def knapsack(W,val,wt): # different from classical bag problem, this one requires the weight to be exact
+
+# this is default knapsack problem, n items with n valuesa and n weights, maximize the total value with constraints that total weight is no larger than the bag size W
 
 
-
-
-def knapsack1(W,val,wt,n):
+# this recursion is not efficient, same subproblems are repeatedly computed
+def knapsack(W,val,wt,n):
     def helper(W,val,wt,n):
         if W==0 or n==0:
             return 0
@@ -15,7 +15,8 @@ def knapsack1(W,val,wt,n):
 
     return helper(W,val,wt,n)
 
-def knapsack2(W,val,wt,n):
+# improved solution using bottom up dp
+def knapsack(W,val,wt,n):
     dp = [[0 for _ in range(n+1)] for _ in range(W+1)]
     for i in range(W+1):
         if i == 0:
@@ -29,6 +30,8 @@ def knapsack2(W,val,wt,n):
                 dp[i][j] = max(dp[i][j-1],dp[i-wt[j-1]][j-1]+val[j-1])
     return dp[W][n]
 
+
+#def knapsack(W,val,wt): # different from classical bag problem, this one requires the weight to be exact
 def knapsack3(W,val,wt,n):
     dp = [0 for _ in range(W+1)]
     for k in range(1,W+1):
